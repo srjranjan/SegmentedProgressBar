@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin:  'maven-publish'
 
 android {
     compileSdkVersion 30
@@ -14,7 +15,12 @@ android {
 
         consumerProguardFiles 'consumer-rules.pro'
     }
-
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+            withJavadocJar()
+        }
+    }
     buildTypes {
         release {
             minifyEnabled false
@@ -23,14 +29,13 @@ android {
     }
     publishing {
         publications {
-            maven(MavenPublication) {
-                groupId = 'org.company'
-                artifactId = 'sample'
-                version = "1.0.3"
-                from components.java
+            release(MavenPublication) {
+                groupId = 'com.github.srjranjan'
+                artifactId = 'progressBar'
+                version = '1.0.5'
 
-                pom {
-                    description = 'A description of my library'
+                afterEvaluate {
+                    from components.release
                 }
             }
         }
