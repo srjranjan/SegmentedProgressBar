@@ -21,7 +21,20 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+    publishing {
+        publications {
+            maven(MavenPublication) {
+                groupId = 'org.company'
+                artifactId = 'sample'
+                version = "1.0.3"
+                from components.java
 
+                pom {
+                    description = 'A description of my library'
+                }
+            }
+        }
+    }
 }
 
 dependencies {
